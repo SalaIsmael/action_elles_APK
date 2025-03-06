@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\action_elle_apk.props" />
+</Project>

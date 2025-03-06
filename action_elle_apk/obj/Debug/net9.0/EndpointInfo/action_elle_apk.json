@@ -1,0 +1,332 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "action_elle_apk",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/produitsassurances": {
+      "get": {
+        "tags": [
+          "ProduitAssurance"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/simulations": {
+      "get": {
+        "tags": [
+          "Simulations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Simulation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Simulation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Simulation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Simulations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Simulation"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Simulation"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Simulation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/simulations/{id}": {
+      "get": {
+        "tags": [
+          "Simulations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CategorieEligible": {
+        "type": "object",
+        "properties": {
+          "categorieVehiculeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "categorieVehicule": {
+            "$ref": "#/components/schemas/CategorieVehicule"
+          },
+          "produitAssuranceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "produitAssurance": {
+            "$ref": "#/components/schemas/ProduitAssurance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategorieVehicule": {
+        "type": "object",
+        "properties": {
+          "categorieVehiculeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "produitsAssurance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategorieEligible"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Garantie": {
+        "type": "object",
+        "properties": {
+          "garantieId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "produitsAssurance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GarantieIncluse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GarantieIncluse": {
+        "type": "object",
+        "properties": {
+          "garantieId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "garantie": {
+            "$ref": "#/components/schemas/Garantie"
+          },
+          "produitAssuranceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "produitAssurance": {
+            "$ref": "#/components/schemas/ProduitAssurance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProduitAssurance": {
+        "type": "object",
+        "properties": {
+          "produitAssuranceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomProduitAssurance": {
+            "type": "string",
+            "nullable": true
+          },
+          "garanties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GarantieIncluse"
+            },
+            "nullable": true
+          },
+          "categorieVehicules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategorieEligible"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Simulation": {
+        "type": "object",
+        "properties": {
+          "simulationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateMiseEnService": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "puissanceVehicule": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valeurVehicule": {
+            "type": "number",
+            "format": "double"
+          },
+          "valeurActuelleVehicule": {
+            "type": "number",
+            "format": "double"
+          },
+          "produitAssuranceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "produitAssurance": {
+            "$ref": "#/components/schemas/ProduitAssurance"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

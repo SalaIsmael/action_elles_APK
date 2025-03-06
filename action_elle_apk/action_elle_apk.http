@@ -1,0 +1,6 @@
+@action_elle_apk_HostAddress = http://localhost:5231
+
+GET {{action_elle_apk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
