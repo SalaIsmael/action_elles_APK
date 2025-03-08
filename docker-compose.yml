@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: assur_auto
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./action_elle_apk
+      dockerfile: Dockerfile
+    container_name: assur_auto_api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=assur_auto;Username=admin;Password=admin123"
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+
+volumes:
+  postgres_data:

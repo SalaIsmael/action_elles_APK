@@ -1,5 +1,25 @@
 [
   {
+    "ContainingType": "action_elle_apk.Controllers.CategorieVehiculeController",
+    "Method": "GetCategorieVehicules",
+    "RelativePath": "api/v1/categorievehicules",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[action_elle_apk.Models.CategorieVehicule, action_elle_apk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "action_elle_apk.Controllers.ProduitAssuranceController",
     "Method": "GetProduitsAssurance",
     "RelativePath": "api/v1/produitsassurances",
@@ -9,7 +29,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.Object, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[action_elle_apk.Models.ProduitAssurance, action_elle_apk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -82,6 +102,84 @@
     "ReturnTypes": [
       {
         "Type": "action_elle_apk.Models.Simulation",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "action_elle_apk.Controllers.SouscriptionController",
+    "Method": "CreateSouscription",
+    "RelativePath": "api/v1/subscriptions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "souscription",
+        "Type": "action_elle_apk.Models.Souscription",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "action_elle_apk.Models.Souscription",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "action_elle_apk.Controllers.SouscriptionController",
+    "Method": "GetSouscription",
+    "RelativePath": "api/v1/subscriptions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "action_elle_apk.Models.Souscription",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "action_elle_apk.Controllers.SouscriptionController",
+    "Method": "GetSouscriptionStatus",
+    "RelativePath": "api/v1/subscriptions/status/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",

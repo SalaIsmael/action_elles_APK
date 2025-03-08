@@ -1,4 +1,5 @@
 ﻿using action_elle_apk.Data;
+using action_elle_apk.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,9 @@ namespace action_elle_apk.Controllers
             _context = context;
         }
 
-
+        // On Récupère tous les produits d'assurance
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> GetProduitsAssurance()
+        public async Task<ActionResult<IEnumerable<ProduitAssurance>>> GetProduitsAssurance()
         {
             var produits = await _context.ProduitsAssurances
                 .Select(p => new

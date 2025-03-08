@@ -18,14 +18,14 @@ namespace action_elle_apk.Controllers
         }
 
 
-        // 🔹 Récupérer toutes les simulations
+        // On Récupère toutes les simulations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Simulation>>> GetSimulations()
         {
             return await _context.Simulations.ToListAsync();
         }
 
-        // 🔹 Récupérer une simulation par ID
+        // On Récupère une simulation par ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Simulation>> GetSimulation(int id)
         {
@@ -34,11 +34,11 @@ namespace action_elle_apk.Controllers
             return simulation;
         }
 
-        // 🔹 Créer une simulation avec calcul de la prime
+        // On Crée une simulation avec calcul de la prime
         [HttpPost]
         public async Task<ActionResult<Simulation>> CreateSimulation(Simulation simulation)
         {
-            // 🔹 Vérifier que le produit d’assurance existe et inclut les garanties associées
+            // On Vérifie que le produit d’assurance existe et inclut les garanties associées
             var produit = await _context.ProduitsAssurances
                 .Include(p => p.Garanties)
                 .ThenInclude(g => g.Garantie)
@@ -47,7 +47,7 @@ namespace action_elle_apk.Controllers
             if (produit == null)
                 return NotFound("Produit d'assurance introuvable.");
 
-            // 🔹 Associer le produit récupéré à la simulation
+            // On Associe le produit récupéré à la simulation
             simulation.ProduitAssurance = produit;
 
 
@@ -56,7 +56,7 @@ namespace action_elle_apk.Controllers
             simulation.EndDate = DateTime.SpecifyKind(DateTime.UtcNow.AddDays(14), DateTimeKind.Utc);
             //simulation.DateMiseEnService = DateTime.SpecifyKind(simulation.DateMiseEnService, DateTimeKind.Utc);
             
-            //On fais le calcul de la prime
+            
             simulation.Price = CalculerPrime(simulation);
 
             _context.Simulations.Add(simulation);
@@ -92,32 +92,31 @@ namespace action_elle_apk.Controllers
                     var garantie = garantieIncluse.Garantie;
                     simulation.DateMiseEnService = DateTime.SpecifyKind(simulation.DateMiseEnService, DateTimeKind.Utc);
                     var nom = garantie.Nom;
-                    // 🔹 Garantie Dommages (Véhicules 0-5 ans) : 2.6% de la valeur à neuf
+                    
                     if (garantie.Nom == "Dommages" && AgeVehicule(simulation.DateMiseEnService) <= 5)
                     {
                         primeDommages = simulation.ValeurVehicule * 0.026m;
                     }
 
-                    // 🔹 Garantie Tierce Collision (Véhicules 0-8 ans) : 1.65% de la valeur à neuf
+                    
                     if (garantie.Nom == "Tierce Collision" && AgeVehicule(simulation.DateMiseEnService) <= 8)
                     {
                         primeTierceCollision = simulation.ValeurVehicule * 0.0165m;
                     }
 
-                    // 🔹 Garantie Tierce Plafonnée (Véhicules 0-10 ans) : 4.2% de la valeur assurée, min 100 000 F CFA
+                    
                     if (garantie.Nom == "Tierce Plafonnée" && AgeVehicule(simulation.DateMiseEnService) <= 10)
                     {
-                        decimal valeurAssuree = simulation.ValeurActuelleVehicule * 0.5m; // 50% de la valeur vénale
-                        primeTiercePlafonnee = Math.Max(valeurAssuree * 0.042m, 100000); // Minimum 100 000 F CFA
+                        decimal valeurAssuree = simulation.ValeurActuelleVehicule * 0.5m; 
+                        primeTiercePlafonnee = Math.Max(valeurAssuree * 0.042m, 100000); 
                     }
 
-                    // 🔹 Garantie Vol : 0.14% de la valeur vénale
+                   
                     if (garantie.Nom == "Vol")
                     {
                         primeVol = simulation.ValeurActuelleVehicule * 0.0014m;
                     }
 
-                    // 🔹 Garantie Incendie : 0.15% de la valeur vénale
                     if (garantie.Nom == "Incendie")
                     {
                         primeIncendie = simulation.ValeurActuelleVehicule * 0.0015m;
@@ -128,16 +127,16 @@ namespace action_elle_apk.Controllers
 
             else
             {
-                // Log ou message d'erreur si les garanties sont vides
+                
                 Console.WriteLine("Aucune garantie");
             }
 
-            // 🔹 4. Calcul final
+           
             decimal primeTotale = primeRC + primeDommages + primeTierceCollision + primeTiercePlafonnee + primeVol + primeIncendie;
             return primeTotale;
         }
 
-        // 🔹 Méthode pour calculer l'âge du véhicule
+        // Méthode pour calculer l'âge du véhicule
         private int AgeVehicule(DateTime dateMiseEnService)
         {
             return DateTime.UtcNow.Year - dateMiseEnService.Year;

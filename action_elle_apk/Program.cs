@@ -31,7 +31,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // Autoriser React
+            policy.WithOrigins("http://localhost:5173") // Autoriser React
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -39,14 +39,25 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+//Application automatique des migrations
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate(); //Applique automatiquement les migrations
+}
+
+//Créer des seeders pour alimenter les tables
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+    //dbContext.Database.Migrate();
     await dbContext.SeedCategoriesVehiculesAsync();
     await dbContext.SeedDataAsync();
     await dbContext.SeedCategoriesEligiblesAsync();
 }
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

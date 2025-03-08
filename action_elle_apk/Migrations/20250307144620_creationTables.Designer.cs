@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using action_elle_apk.Data;
@@ -11,9 +12,11 @@ using action_elle_apk.Data;
 namespace action_elle_apk.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250307144620_creationTables")]
+    partial class creationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,69 +153,6 @@ namespace action_elle_apk.Migrations
                     b.ToTable("Simulations");
                 });
 
-            modelBuilder.Entity("action_elle_apk.Models.Souscription", b =>
-                {
-                    b.Property<int>("SouscriptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SouscriptionId"));
-
-                    b.Property<string>("Adresse")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("CategorieVehiculeId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Couleur")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateMiseEnService")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NomAssure")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("NombrePorte")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NombreSiege")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("NumeroCarteIdentite")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("NumeroImmatriculation")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PrenomAssure")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Ville")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("SouscriptionId");
-
-                    b.HasIndex("CategorieVehiculeId");
-
-                    b.ToTable("Souscriptions");
-                });
-
             modelBuilder.Entity("action_elle_apk.Models.CategorieEligible", b =>
                 {
                     b.HasOne("action_elle_apk.Models.CategorieVehicule", "CategorieVehicule")
@@ -260,17 +200,6 @@ namespace action_elle_apk.Migrations
                         .IsRequired();
 
                     b.Navigation("ProduitAssurance");
-                });
-
-            modelBuilder.Entity("action_elle_apk.Models.Souscription", b =>
-                {
-                    b.HasOne("action_elle_apk.Models.CategorieVehicule", "CategorieVehicule")
-                        .WithMany()
-                        .HasForeignKey("CategorieVehiculeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CategorieVehicule");
                 });
 
             modelBuilder.Entity("action_elle_apk.Models.CategorieVehicule", b =>

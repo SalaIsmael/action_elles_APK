@@ -12,6 +12,7 @@ namespace action_elle_apk.Data
         }
 
         public DbSet<Simulation> Simulations { get; set; }
+        public DbSet<Souscription> Souscriptions { get; set; }
         public DbSet<ProduitAssurance> ProduitsAssurances { get; set; }
         public DbSet<Garantie> Garanties { get; set; }
         public DbSet<CategorieVehicule> CategoriesVehicules { get; set; }
