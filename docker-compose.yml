@@ -29,7 +29,7 @@ services:
 
   frontend:
     build:
-      context: ./../action-elles-apk-front  
+      context: ./../action_elles_apk_front  
       dockerfile: Dockerfile  
     container_name: assur_auto_front
     restart: always
