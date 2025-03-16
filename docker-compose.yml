@@ -27,5 +27,18 @@ services:
       - "5000:5000"
       - "5001:5001"
 
+  frontend:
+    build:
+      context: ./../action-elles-apk-front  
+      dockerfile: Dockerfile  
+    container_name: assur_auto_front
+    restart: always
+    ports:
+      - "5173:5173"  
+    depends_on:
+      - api  # Le front dépend de l'API
+    environment:
+      - REACT_APP_API_URL=http://api:5000  # Variable d'environnement pour l'URL de l'API
+
 volumes:
   postgres_data:
